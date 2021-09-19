@@ -30,13 +30,18 @@ A bot for cigargary's twitch and discord? Below is all for developers and contri
 	pipenv run blah
 	```
 2. Set up a twitch bot token (see below)
+3. Run the bot
+	```
+	# from root of the project directory
+	pipenv run python main.py
+	```
 
 ## How to generate a token for the twitch bot
 
 Documentation on twitchio library: https://pypi.org/project/twitchio/
 
-1. Logout of account
-2. Create a bot account
+1. Logout of current twitch account
+2. Create a bot twitch account
 3. Create a token: https://twitchtokengenerator.com/
 4. Add tokens in an .env file
 	```
