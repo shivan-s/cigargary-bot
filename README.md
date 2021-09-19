@@ -1,18 +1,34 @@
 # cigargary-bot
-A bot for cigargary's twtich and discord?
+A bot for cigargary's twitch and discord? Below is all for developers and contributors (where do we put this?)
+
+- Project for the project management for this app and also storing resources
+- Issues for ideas and problems
 
 ## Plan
 
+0. Write tests
 1. Twitch bot that responds to commands like !project, !devops
 2. Link twitch to discord to tell discord when cigargary is live?
+3. Write tests
 
 ## Set up
 
-1. Set up pre-commit
-```
-pip install pre-commit
-pre-commit install
-```
+1. Set up `pre-commit`
+	```shell
+	pip install pre-commit
+	pre-commit install
+	```
+2. Set up `pipenv`
+	```shell
+	pip install pipenv
+	pipenv lock
+
+	# enter the shell to run code
+	pipenv shell
+
+	# or use pipenv run
+	pipenv run blah
+	```
 2. Set up a twitch bot token (see below)
 
 ## How to generate a token for the twitch bot
@@ -25,8 +41,11 @@ Documentation on twitchio library: https://pypi.org/project/twitchio/
 4. Add tokens in an .env file
 	```
 	# .env
-
-	ACCESS_TOKEN=
-	FRESH_TOKEN=
+	TMI_TOKEN=oauth:<ACCESS TOKEN>
 	CLIENT_ID=
+	BOT_NICK=
+	BOT_PREFIX=!
+	CHANNEL=
+
+	FRESH_TOKEN=
 	```
