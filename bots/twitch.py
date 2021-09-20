@@ -1,12 +1,12 @@
 #!python3.8
-# bot.py - contains the main scripts for running the twitch bot
+# twitch.py - contains the main scripts for running the twitch bot
 
 import os
 
 from twitchio.ext import commands
 
 
-class Bot(commands.Bot):
+class TwitchBot(commands.Bot):
     """
     This will be our bot class
     """
@@ -41,3 +41,6 @@ class Bot(commands.Bot):
             hello user
         """
         await ctx.send(f"Hello {ctx.author.name}!")
+
+    # TODO: Creat ability for owner of the chat + mod? to create commands
+    # e.g. !command <action> response

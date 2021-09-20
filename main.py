@@ -1,12 +1,12 @@
 #!python3.8
 # main.py - main python file to run
 
-from twitch.bot import Bot
+from bots.twitch import TwitchBot
 
 
 def main():
-    bot = Bot()
-    bot.run()
+    twitch_bot = TwitchBot()
+    twitch_bot.run()
 
 
 if __name__ == "__main__":
