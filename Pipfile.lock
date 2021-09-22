@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bcc02af2ac0e54bba71f6b6da1a8e584cf1d1f6266ab2f090f9775219650dd96"
+            "sha256": "072387fb5338936bfe24f04d333066c11d886bd1b66cdbb9ec08b5d065c1db3b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -82,6 +82,14 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4'",
             "version": "==4.0.0"
+        },
+        "discord.py": {
+            "hashes": [
+                "sha256:462cd0fe307aef8b29cbfa8dd613e548ae4b2cb581d46da9ac0d46fb6ea19408",
+                "sha256:c6f64db136de0e18e090f6752ea68bdd4ab0a61b82dfe7acecefa22d6477bb0c"
+            ],
+            "index": "pypi",
+            "version": "==1.7.3"
         },
         "idna": {
             "hashes": [

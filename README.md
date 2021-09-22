@@ -36,7 +36,7 @@ A bot for cigargary's twitch and discord? Below is all for developers and contri
 	pipenv run python main.py
 	```
 
-## How to generate a token for the twitch bot
+## [TWITCH] How to generate a token for the twitch bot
 
 Documentation on twitchio library: https://pypi.org/project/twitchio/
 
@@ -54,3 +54,16 @@ Documentation on twitchio library: https://pypi.org/project/twitchio/
 
 	FRESH_TOKEN=
 	```
+
+## [DISCORD] Setting up discord bot
+
+Resources:
+- https://pypi.org/project/discord.py/
+- https://realpython.com/how-to-make-a-discord-bot-python/
+1. Create a bot account and get tokens (see resouces above) TODO: write 1. Create a bot account and get tokens (see resouces above) TODO: write1. Create a bot account and get tokens (see resouces above) TODO: write this
+2. Add below to .env file
+	``` # discord .env portion
+	DISCORD_TOKEN=
+	DISCORD_GUILD=cigargary
+	```
+3. TODO: Consoldate this with twitch .env files settings

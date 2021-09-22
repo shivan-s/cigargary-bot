@@ -2,6 +2,7 @@
 # main.py - main python file to run
 
 from bots.twitch import TwitchBot
+from bots.discord_bot import
 
 
 def main():

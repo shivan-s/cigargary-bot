@@ -1,7 +1,12 @@
 #!python3.8
 # twitch.py - contains the main scripts for running the twitch bot
+# pipenv - this will load .env variables
 
 import os
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger()
 
 from twitchio.ext import commands
 
@@ -13,16 +18,17 @@ class TwitchBot(commands.Bot):
 
     def __init__(self):
         super().__init__(
-            token=os.environ.get("ACCESS_TOKEN"),
-            prefix=os.environ.get("BOT_PREFIX"),
-            initial_channel=[os.environ.get("CHANNELS")],
+            token=os.getenv("ACCESS_TOKEN"),
+            prefix=os.getenv("BOT_PREFIX"),
+            initial_channel=[os.getenv("CHANNELS")],
         )
 
     async def event_ready(self):
         """
         Notify us the bot is logged and ready to go
         """
-        print(f"Logged in as {self.nick}")
+        logging.info(f"Logged in as {self.nick}")
+        logging.info(f"Connected channels: {self.connected_channels}")
 
     async def event_message(self, message):
         """
