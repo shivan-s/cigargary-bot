@@ -46,11 +46,11 @@ Documentation on twitchio library: https://pypi.org/project/twitchio/
 4. Add tokens in an .env file
 	```
 	# .env
-	TMI_TOKEN=oauth:<ACCESS TOKEN>
+	ACCESS_TOKEN=oauth:<ACCESS TOKEN>
 	CLIENT_ID=
 	BOT_NICK=
 	BOT_PREFIX=!
-	CHANNEL=
+	CHANNELS=
 
 	FRESH_TOKEN=
 	```

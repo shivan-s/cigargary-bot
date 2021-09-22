@@ -5,10 +5,10 @@
 import os
 import logging
 
+from twitchio.ext import commands
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
-
-from twitchio.ext import commands
 
 
 class TwitchBot(commands.Bot):
@@ -20,7 +20,7 @@ class TwitchBot(commands.Bot):
         super().__init__(
             token=os.getenv("ACCESS_TOKEN"),
             prefix=os.getenv("BOT_PREFIX"),
-            initial_channel=[os.getenv("CHANNELS")],
+            initial_channels=[os.getenv("CHANNELS")],
         )
 
     async def event_ready(self):
@@ -46,7 +46,10 @@ class TwitchBot(commands.Bot):
         e.g !hello
             hello user
         """
-        await ctx.send(f"Hello {ctx.author.name}!")
+        if ctx.author.name == "vesklabs":
+            await ctx.send(f"Veskkkkky!")
+        else:
+            await ctx.send(f"Hello {ctx.author.name}!")
 
     # TODO: Creat ability for owner of the chat + mod? to create commands
     # e.g. !command <action> response
