@@ -2,13 +2,16 @@
 # twitch.py - contains the main scripts for running the twitch bot
 # pipenv - this will load .env variables
 
-import os
 import logging
+import os
+
+from sqlalchemy import create_engine
+from twitchio.ext import commands
+
+engine = create_engine("sqlite+pysqlite:///:memory:", echo=True, future=True)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
-
-from twitchio.ext import commands
 
 
 class TwitchBot(commands.Bot):
@@ -20,7 +23,7 @@ class TwitchBot(commands.Bot):
         super().__init__(
             token=os.getenv("ACCESS_TOKEN"),
             prefix=os.getenv("BOT_PREFIX"),
-            initial_channel=[os.getenv("CHANNELS")],
+            initial_channels=[os.getenv("CHANNELS")],
         )
 
     async def event_ready(self):
@@ -36,7 +39,7 @@ class TwitchBot(commands.Bot):
         """
         if message.echo:
             return
-        print(message.content)
+        logging.info(f"{message.author}-{message.content}")
         await self.handle_commands(message)
 
     @commands.command()
@@ -48,5 +51,16 @@ class TwitchBot(commands.Bot):
         """
         await ctx.send(f"Hello {ctx.author.name}!")
 
+    @commands.command()
+    async def actions(self, ctx: commands.Context):
+        """
+        Commands function
+        e.g. !commands - prints all commands
+        """
+        if lst_commands:
+            await ctx.send(str([_ for _ in lst_commands]))
+        else:
+            await ctx.send("No commands set")
+
     # TODO: Creat ability for owner of the chat + mod? to create commands
-    # e.g. !command <action> response
+    # e.g. !commands <action> response
