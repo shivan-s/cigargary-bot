@@ -64,3 +64,14 @@ class TwitchBot(commands.Bot):
 
     # TODO: Creat ability for owner of the chat + mod? to create commands
     # e.g. !commands <action> response
+
+    @commands.command()
+    async def stack(self, ctx: commands.Context):
+        """
+        Say hello back to the user, assuming prefix is !
+        e.g !hello
+            hello user
+        """
+        await ctx.send(
+            f"{ctx.author.name} nuaudit uses a React Frontend, FastAPI Backend, and DynamoDB as a database"
+        )
