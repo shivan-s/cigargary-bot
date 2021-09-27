@@ -7,9 +7,13 @@ name = "pypi"
 twitchio = "*"
 "discord.py" = "*"
 sqlalchemy = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 pytest = "*"
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+start = "python main.py"

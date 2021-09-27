@@ -33,7 +33,7 @@ A bot for cigargary's twitch and discord? Below is all for developers and contri
 3. Run the bot
 	```
 	# from root of the project directory
-	pipenv run python main.py
+	pipenv run start
 	```
 
 ## [TWITCH] How to generate a token for the twitch bot

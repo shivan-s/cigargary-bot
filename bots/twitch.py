@@ -8,9 +8,16 @@ import os
 from sqlalchemy import create_engine
 from twitchio.ext import commands
 
-engine = create_engine("sqlite+pysqlite:///:memory:", echo=True, future=True)
+# https://help.heroku.com/ZKNTJQSK/why-is-sqlalchemy-1-4-x-not-connecting-to-heroku-postgres
+DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL is None:
+    import sys
 
-from twitchio.ext import commands
+    sys.exit("DATABASE_URL not supplied.")
+
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+engine = create_engine(DATABASE_URL)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -56,14 +63,15 @@ class TwitchBot(commands.Bot):
         else:
             await ctx.send(f"Hello {ctx.author.name}!")
 
-    @commands.command()
-    async def actions(self, ctx: commands.Context):
+    @commands.command(name="commands")
+    async def commands_(self, ctx: commands.Context):
         """
         Commands function
         e.g. !commands - prints all commands
         """
-        if lst_commands:
-            await ctx.send(str([_ for _ in lst_commands]))
+        list_commands = ctx.bot.commands
+        if list_commands:
+            await ctx.send(str([_ for _ in list_commands]))
         else:
             await ctx.send("No commands set")
 
@@ -78,5 +86,7 @@ class TwitchBot(commands.Bot):
             hello user
         """
         await ctx.send(
-            f"{ctx.author.name} nuaudit uses a React Frontend, FastAPI Backend, and DynamoDB as a database"
+            f"{ctx.author.name} nuaudit uses a React Frontend, \
+                FastAPI Backend, \
+                and DynamoDB as a database"
         )
