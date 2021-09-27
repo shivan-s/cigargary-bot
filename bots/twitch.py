@@ -71,7 +71,7 @@ class TwitchBot(commands.Bot):
         """
         list_commands = ctx.bot.commands
         if list_commands:
-            await ctx.send(str([_ for _ in list_commands]))
+            await ctx.send(", ".join(list_commands.keys()))
         else:
             await ctx.send("No commands set")
 
@@ -89,4 +89,12 @@ class TwitchBot(commands.Bot):
             f"{ctx.author.name} nuaudit uses a React Frontend, \
                 FastAPI Backend, \
                 and DynamoDB as a database"
+        )
+
+    @commands.command()
+    async def roll(self, ctx: commands.Context):
+        import random
+
+        await ctx.send(
+            f"{ctx.author.name} rolls {random.randint(1,100)} (1-100)"
         )
