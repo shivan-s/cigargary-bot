@@ -1,5 +1,5 @@
 # cigargary-bot
-A bot for cigargary's twitch and discord? Below is all for developers and contributors (where do we put this?)
+A bot for cigargary's twitch and discord? Below is all for developers and contributors
 
 - Project for the project management for this app and also storing resources
 - Issues for ideas and problems
