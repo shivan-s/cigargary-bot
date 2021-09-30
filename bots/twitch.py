@@ -81,9 +81,7 @@ class TwitchBot(commands.Bot):
     @commands.command()
     async def stack(self, ctx: commands.Context):
         """
-        Say hello back to the user, assuming prefix is !
-        e.g !hello
-            hello user
+        What is the stack?
         """
         await ctx.send(
             f"{ctx.author.name} nuaudit uses a React Frontend, \
@@ -97,4 +95,16 @@ class TwitchBot(commands.Bot):
 
         await ctx.send(
             f"{ctx.author.name} rolls {random.randint(1,100)} (1-100)"
+        )
+
+    @commands.command()
+    async def project(self, ctx: commands.Context):
+        """
+        explains the project
+        """
+
+        await ctx.send(
+            f"{ctx.author.name} @cigargary is working on \
+                    https://www.nuaudit.com. A SaaS for generating an audit \
+                    trail"
         )
