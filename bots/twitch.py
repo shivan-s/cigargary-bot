@@ -69,9 +69,12 @@ class TwitchBot(commands.Bot):
         Commands function
         e.g. !commands - prints all commands
         """
-        list_commands = ctx.bot.commands
+        list_commands = [
+            f"!{str(command)}" for command in ctx.bot.commands.keys()
+        ]
+
         if list_commands:
-            await ctx.send(", ".join(list_commands.keys()))
+            await ctx.send(", ".join(list_commands))
         else:
             await ctx.send("No commands set")
 
