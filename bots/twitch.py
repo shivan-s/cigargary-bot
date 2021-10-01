@@ -4,6 +4,8 @@
 
 import logging
 import os
+import sys
+import random
 
 from sqlalchemy import create_engine
 from twitchio.ext import commands
@@ -11,7 +13,6 @@ from twitchio.ext import commands
 # https://help.heroku.com/ZKNTJQSK/why-is-sqlalchemy-1-4-x-not-connecting-to-heroku-postgres
 DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL is None:
-    import sys
 
     sys.exit("DATABASE_URL not supplied.")
 
@@ -54,9 +55,8 @@ class TwitchBot(commands.Bot):
     @commands.command()
     async def hello(self, ctx: commands.Context):
         """
-        Say hello back to the user, assuming prefix is !
-        e.g !hello
-            hello user
+        !hello
+            says hello to the user
         """
         if ctx.author.name == "vesklabs":
             await ctx.send(f"Veskkkkky!")
@@ -66,8 +66,8 @@ class TwitchBot(commands.Bot):
     @commands.command(name="commands")
     async def commands_(self, ctx: commands.Context):
         """
-        Commands function
-        e.g. !commands - prints all commands
+        !commands
+            prints a list of commands
         """
         list_commands = [
             f"!{str(command)}" for command in ctx.bot.commands.keys()
@@ -94,7 +94,6 @@ class TwitchBot(commands.Bot):
 
     @commands.command()
     async def roll(self, ctx: commands.Context):
-        import random
 
         await ctx.send(
             f"{ctx.author.name} rolls {random.randint(1,100)} (1-100)"
@@ -103,7 +102,8 @@ class TwitchBot(commands.Bot):
     @commands.command()
     async def project(self, ctx: commands.Context):
         """
-        explains the project
+        !project
+            explains the project
         """
 
         await ctx.send(
@@ -111,3 +111,34 @@ class TwitchBot(commands.Bot):
                     https://www.nuaudit.com. A SaaS for generating an audit \
                     trail"
         )
+
+    @commands.command()
+    async def flag(self, ctx: commands.Context):
+        """
+        !project
+            explains the project
+        """
+
+        await ctx.send(
+            f"{ctx.author.name} https://nzhistory.govt.nz/media/photo/fire-lazar"
+        )
+
+    @commands.command()
+    async def devops(self, ctx: commands.Context):
+        """
+        !devops
+            devops explained
+        """
+
+        await ctx.send(
+            f"{ctx.author.name} @cigargary needs to write something about this"
+        )
+
+    @commands.command()
+    async def discord(self, ctx: commands.Context):
+        """
+        !project
+            explains the project
+        """
+
+        await ctx.send(f"{ctx.author.name} https://discord.gg/mrEJ99WbyG")
