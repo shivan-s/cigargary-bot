@@ -1,4 +1,5 @@
 #!python3.8
+# -*- coding: utf-8 -*-
 # twitch.py - contains the main scripts for running the twitch bot
 # pipenv - this will load .env variables
 
@@ -131,7 +132,17 @@ class TwitchBot(commands.Bot):
         """
 
         await ctx.send(
-            f"{ctx.author.name} @cigargary needs to write something about this"
+            f"""{ctx.author.name} DevOps Engineers automate the deployment \
+                of code and infrastructure. A DevOps engineer needs to understand \
+                how to administer servers and infrastructure (mostly Linux based), \
+                and how to deploy and run code on servers. Devops engineers use \
+                software scripting (Bash, Python, etc), Infrastructure as Code \
+                (Terraform, AWS CloudFormation) and CI/CD platforms \
+                (Gitlab, GitHub Actions, AWS Codepipeline, CircleCI, Jenkins, Travis). \
+                DevOps engineers also work closely with  container technologies \
+                such as docker which help standardise software deployments. \
+                Containers are often deployed to container orchestration systems \
+                such as Kubernetes and AWS ECS."""
         )
 
     @commands.command()
