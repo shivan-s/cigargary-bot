@@ -7,6 +7,7 @@ import logging
 import os
 import sys
 import random
+import asyncio
 
 from sqlalchemy import create_engine
 from twitchio.ext import commands
@@ -135,11 +136,25 @@ class TwitchBot(commands.Bot):
             f"""{ctx.author.name} DevOps Engineers automate the deployment \
                 of code and infrastructure. A DevOps engineer needs to understand \
                 how to administer servers and infrastructure (mostly Linux based), \
-                and how to deploy and run code on servers. Devops engineers use \
-                software scripting (Bash, Python, etc), Infrastructure as Code \
-                (Terraform, AWS CloudFormation) and CI/CD platforms \
-                (Gitlab, GitHub Actions, AWS Codepipeline, CircleCI, Jenkins, Travis). \
-                DevOps engineers also work closely with  container technologies \
+                and how to deploy and run code on servers. See !howtodevops for \
+                more info."""
+        )
+
+    @commands.command()
+    async def howtodevops(self, ctx: commands.Context):
+        """
+        !howtodevops
+            howtodevops explained
+        """
+
+        await ctx.send(
+            f"""{ctx.author.name} DevOps engineers use software scripting (Bash, Python, etc), \
+                Infrastructure as Code (Terraform, AWS CloudFormation) and CI/CD \
+                platforms (Gitlab, AWS Codepipeline, CircleCI, Jenkins)."""
+        )
+        await asyncio.sleep(3)
+        await ctx.send(
+            f"""{ctx.author.name} DevOps engineers also work closely with container technologies \
                 such as docker which help standardise software deployments. \
                 Containers are often deployed to container orchestration systems \
                 such as Kubernetes and AWS ECS."""
