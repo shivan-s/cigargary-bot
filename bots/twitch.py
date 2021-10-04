@@ -9,7 +9,12 @@ import sys
 import random
 import asyncio
 
-from sqlalchemy import create_engine
+from typing import Optional
+
+from sqlalchemy import create_engine, MetaData, Column, String, Integer, select
+from sqlalchemy.ext.declarative import DeclarativeMeta
+from sqlalchemy.sql.expression import func
+from sqlalchemy.orm import Session, declarative_base
 from twitchio.ext import commands
 
 # https://help.heroku.com/ZKNTJQSK/why-is-sqlalchemy-1-4-x-not-connecting-to-heroku-postgres
@@ -22,8 +27,40 @@ if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 engine = create_engine(DATABASE_URL)
 
+Base: DeclarativeMeta = declarative_base()
+
+
+class Motivation(Base):
+    __tablename__ = "motivations"
+    id = Column(Integer, primary_key=True)
+    user = Column(String)
+    phrase = Column(String)
+
+    def __repr__(self):
+        return f"Motivation(id={self.id!r}, name={self.user!r}, phrase={self.phrase!r})"
+
+
+meta = MetaData(engine)
+meta.create_all()
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
+
+
+async def strip_command(command: str, message: str) -> Optional[str]:
+    prefix = f"""{os.getenv("BOT_PREFIX")}{command}"""
+
+    if not message.lower().startswith(prefix):
+        return None
+
+    import re
+
+    content = re.sub(f"^{prefix}\\s+", "", message, flags=re.I)
+
+    if content.lower().startswith(prefix):
+        return None
+
+    return content
 
 
 class TwitchBot(commands.Bot):
@@ -168,3 +205,90 @@ class TwitchBot(commands.Bot):
         """
 
         await ctx.send(f"{ctx.author.name} https://discord.gg/mrEJ99WbyG")
+
+    @commands.command()
+    async def givemotivation(self, ctx: commands.Context):
+        """
+        !givemotivation
+            Store a motivation
+        """
+
+        content = ctx.message.content
+        content = await strip_command("givemotivation", content)
+
+        if content is None:
+            await ctx.send(
+                f"{ctx.author.name} - I couldn't save your motivation :("
+            )
+            return
+
+        with Session(engine) as session:
+            motivation = Motivation(user=ctx.author.name, phrase=content)
+
+            session.add(motivation)
+            session.commit()
+
+            await ctx.send(
+                f"{motivation.id}: {motivation.phrase} - {motivation.user}"
+            )
+
+    @commands.command()
+    async def motivate(self, ctx: commands.Context):
+        """
+        !motivate
+            Get a motivate
+        """
+        content = ctx.message.content
+        content = await strip_command("motivate", content)
+
+        with Session(engine) as session:
+            if content is not None and content.isdigit():
+                stmt = select(Motivation).where(Motivation.id == content)
+            else:
+                stmt = select(Motivation).order_by(func.random()).limit(1)
+
+            result = session.execute(stmt)
+            row = result.fetchone()
+
+            if not row:
+                await ctx.send(
+                    f"{ctx.author.name} - I'm not motivated right now."
+                )
+            else:
+                await ctx.send(
+                    f"""{row["Motivation"].id}: \
+                        {row["Motivation"].phrase} - {row["Motivation"].user}"""
+                )
+
+    @commands.command()
+    async def takemotivation(self, ctx: commands.Context):
+        """
+        !takemotivation
+            Delete a motivation
+        """
+        if ctx.author.name not in ["cigargary", "Shivans93"]:
+            await ctx.send(
+                f"{ctx.author.name} - Thou shalt not take motivation."
+            )
+            return
+
+        content = ctx.message.content
+        content = await strip_command("takemotivation", content)
+
+        with Session(engine) as session:
+            if content is not None and content.isdigit():
+                stmt = select(Motivation).where(Motivation.id == content)
+                result = session.execute(stmt)
+                row = result.fetchone()
+                if row is None:
+                    await ctx.send(
+                        f"{ctx.author.name} - Motivation already taken."
+                    )
+                    return
+                session.delete(row["Motivation"])
+                session.commit()
+            else:
+                await ctx.send(
+                    f"{ctx.author.name} - Usage !takemotivation <NUMBER>"
+                )
+                return
