@@ -292,3 +292,14 @@ class TwitchBot(commands.Bot):
                     f"{ctx.author.name} - Usage !takemotivation <NUMBER>"
                 )
                 return
+
+    @commands.command()
+    async def penguin(self, ctx: commands.Context):
+        """
+        !penguin
+            Charmander!
+        """
+
+        await ctx.send(
+            f"Hi {ctx.author.name} my name is Charmander, use Razor Leaf!"
+        )
